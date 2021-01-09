@@ -1,0 +1,28 @@
+{
+  "name": "realtime-pizza",
+  "version": "1.0.0",
+  "description": "This is my realtime resturant app",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "serve": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kiingdavies/realtime-pizza.git"
+  },
+  "author": "King Davies",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kiingdavies/realtime-pizza/issues"
+  },
+  "homepage": "https://github.com/kiingdavies/realtime-pizza#readme",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
