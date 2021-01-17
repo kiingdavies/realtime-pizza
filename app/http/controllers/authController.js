@@ -3,11 +3,22 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 
 function authController() {
+    const _getRedirectUrl = (req) => {
+        return req.user.role === 'admin' ? '/admin/orders' : '/customers/orders'
+    }
+
     return {
         login(req, res) {
             res.render('auth/login');
         },
         postLogin(req, res, next) {
+            const { email, password } = req.body;
+            // Validate request
+            if(!email || !password) {
+                req.flash('error', 'All fields are required'); // if user does not complete the form, the flash method returns the error message in messages.error
+                return res.redirect('/login');
+            }
+
             // receives data from the bcrypt in passport.js
             passport.authenticate('local', (err, user, info)=> {
                 if(err) {
@@ -23,7 +34,7 @@ function authController() {
                         req.flash('error', info.message)
                         return next(err)
                     }
-                    return res.redirect('/')
+                    return res.redirect(_getRedirectUrl(req))
                 })
             })(req, res, next)
         },
@@ -34,7 +45,7 @@ function authController() {
             const { name, email, password } = req.body;
             // Validate request
             if(!name || !email || !password) {
-                req.flash('error', 'All fields required'); // if user does not complete the form, the flash method returns the error message in messages.error
+                req.flash('error', 'All fields are required'); // if user does not complete the form, the flash method returns the error message in messages.error
                 req.flash('name', name); // this helps auto-complete the name
                 req.flash('email', email); // this helps auto-complete the email
                 return res.redirect('/register');
