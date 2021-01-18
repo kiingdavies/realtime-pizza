@@ -40,65 +40,61 @@ if(alertMsg) {
     }, 2000)
 }
 
-
-
-initAdmin()
-
 // Change order status
-// let statuses = document.querySelectorAll('.status_line')
-// let hiddenInput = document.querySelector('#hiddenInput')
-// let order = hiddenInput ? hiddenInput.value : null
-// order = JSON.parse(order)
-// let time = document.createElement('small')
+let statuses = document.querySelectorAll('.status_line')
+let hiddenInput = document.querySelector('#hiddenInput')
+let order = hiddenInput ? hiddenInput.value : null
+order = JSON.parse(order)
+let time = document.createElement('small')
 
-// function updateStatus(order) {
-//     statuses.forEach((status) => {
-//         status.classList.remove('step-completed')
-//         status.classList.remove('current')
-//     })
-//     let stepCompleted = true;
-//     statuses.forEach((status) => {
-//        let dataProp = status.dataset.status
-//        if(stepCompleted) {
-//             status.classList.add('step-completed')
-//        }
-//        if(dataProp === order.status) {
-//             stepCompleted = false
-//             time.innerText = moment(order.updatedAt).format('hh:mm A')
-//             status.appendChild(time)
-//            if(status.nextElementSibling) {
-//             status.nextElementSibling.classList.add('current')
-//            }
-//        }
-//     })
+function updateStatus(order) {
+    statuses.forEach((status) => {
+        status.classList.remove('step-completed')
+        status.classList.remove('current')
+    })
+    let stepCompleted = true;
+    statuses.forEach((status) => {
+       let dataProp = status.dataset.status
+       if(stepCompleted) {
+            status.classList.add('step-completed')
+       }
+       if(dataProp === order.status) {
+            stepCompleted = false
+            time.innerText = moment(order.updatedAt).format('hh:mm A') //use this format YYYY:MMMM:dddd:DD:hh:mm A
+            status.appendChild(time)
+           if(status.nextElementSibling) {
+            status.nextElementSibling.classList.add('current')
+           }
+       }
+    })
 
-// }
+}
 
-// updateStatus(order);
+updateStatus(order);
 
 // // Socket
-// let socket = io()
+let socket = io()
 
 // // Join
-// if(order) {
-//     socket.emit('join', `order_${order._id}`)
-// }
-// let adminAreaPath = window.location.pathname
-// if(adminAreaPath.includes('admin')) {
-//     initAdmin(socket)
-//     socket.emit('join', 'adminRoom')
-// }
+if(order) {
+    socket.emit('join', `order_${order._id}`)
+}
+let adminAreaPath = window.location.pathname
+if(adminAreaPath.includes('admin')) {
+    initAdmin(socket)
+    socket.emit('join', 'adminRoom')
+}
 
 
-// socket.on('orderUpdated', (data) => {
-//     const updatedOrder = { ...order }
-//     updatedOrder.updatedAt = moment().format()
-//     updatedOrder.status = data.status
-//     updateStatus(updatedOrder)
-//     new Noty({
-//         type: 'success',
-//         timeout: 1000,
-//         text: 'Order updated',
-//         progressBar: false,
-//     }).show();
-// })
+socket.on('orderUpdated', (data) => {
+    const updatedOrder = { ...order }
+    updatedOrder.updatedAt = moment().format()
+    updatedOrder.status = data.status
+    updateStatus(updatedOrder)
+    new Noty({
+        type: 'success',
+        timeout: 1000,
+        text: 'Order updated',
+        progressBar: false,
+    }).show();
+})

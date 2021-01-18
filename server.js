@@ -80,8 +80,10 @@ const server = app.listen(PORT, ()=> {
 const io = require('socket.io')(server)
 io.on('connection', (socket) => {
       // Join  
-      socket.on('join', (orderId) => {
+      socket.on('join', (orderId) => { //use roomName instead of orderId
         socket.join(orderId)
+        // console.log(socket.id);
+        // console.log(orderId);
       })
 })
 
