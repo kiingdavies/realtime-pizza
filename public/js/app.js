@@ -1918,38 +1918,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var addToCart = document.querySelectorAll(".add-to-cart");
-var cartCounter = document.querySelector('#cartCounter'); // update cart function
+var addToCart = document.querySelectorAll('.add-to-cart');
+var cartCounter = document.querySelector('#cartCounter');
 
 function updateCart(pizza) {
   axios__WEBPACK_IMPORTED_MODULE_0___default().post('/update-cart', pizza).then(function (res) {
-    cartCounter.innerText = res.data.totalQty; // this noty handles the pop-up function when you add item to cart
-
+    cartCounter.innerText = res.data.totalQty;
     new (noty__WEBPACK_IMPORTED_MODULE_1___default())({
       type: 'success',
       timeout: 1000,
       text: 'Item added to cart',
-      progressBar: false // Enable this if you want the noty pop-up to show a tiny progress bar which true by default & it is cool tho
-      // layout: 'topLeft'
-
+      progressBar: false
     }).show();
   })["catch"](function (err) {
     new (noty__WEBPACK_IMPORTED_MODULE_1___default())({
       type: 'error',
       timeout: 1000,
       text: 'Something went wrong',
-      progressBar: false // Enable this if you want the noty pop-up to show a tiny progress bar which true by default & it is cool tho
-      // layout: 'topLeft'
-
+      progressBar: false
     }).show();
   });
 }
 
 addToCart.forEach(function (btn) {
-  btn.addEventListener("click", function (e) {
+  btn.addEventListener('click', function (e) {
     var pizza = JSON.parse(btn.dataset.pizza);
     updateCart(pizza);
-    console.log(pizza);
   });
 }); // Remove alert message after X seconds
 
@@ -1961,7 +1955,57 @@ if (alertMsg) {
   }, 2000);
 }
 
-_admin__WEBPACK_IMPORTED_MODULE_2__.initAdmin;
+(0,_admin__WEBPACK_IMPORTED_MODULE_2__.initAdmin)(); // Change order status
+// let statuses = document.querySelectorAll('.status_line')
+// let hiddenInput = document.querySelector('#hiddenInput')
+// let order = hiddenInput ? hiddenInput.value : null
+// order = JSON.parse(order)
+// let time = document.createElement('small')
+// function updateStatus(order) {
+//     statuses.forEach((status) => {
+//         status.classList.remove('step-completed')
+//         status.classList.remove('current')
+//     })
+//     let stepCompleted = true;
+//     statuses.forEach((status) => {
+//        let dataProp = status.dataset.status
+//        if(stepCompleted) {
+//             status.classList.add('step-completed')
+//        }
+//        if(dataProp === order.status) {
+//             stepCompleted = false
+//             time.innerText = moment(order.updatedAt).format('hh:mm A')
+//             status.appendChild(time)
+//            if(status.nextElementSibling) {
+//             status.nextElementSibling.classList.add('current')
+//            }
+//        }
+//     })
+// }
+// updateStatus(order);
+// // Socket
+// let socket = io()
+// // Join
+// if(order) {
+//     socket.emit('join', `order_${order._id}`)
+// }
+// let adminAreaPath = window.location.pathname
+// if(adminAreaPath.includes('admin')) {
+//     initAdmin(socket)
+//     socket.emit('join', 'adminRoom')
+// }
+// socket.on('orderUpdated', (data) => {
+//     const updatedOrder = { ...order }
+//     updatedOrder.updatedAt = moment().format()
+//     updatedOrder.status = data.status
+//     updateStatus(updatedOrder)
+//     new Noty({
+//         type: 'success',
+//         timeout: 1000,
+//         text: 'Order updated',
+//         progressBar: false,
+//     }).show();
+// })
 
 /***/ }),
 
