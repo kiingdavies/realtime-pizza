@@ -188,17 +188,19 @@ section.status {
      margin-top: 8px;
  }
  
+ // home page style
  @media(max-width:1060px) {
      .container {
          max-width: 90%;
      }
+     // customers orders page style
      table {
         display: block;
         overflow-x: auto;
         white-space: nowrap;
      }
  }
- 
+ // customers single order page style
  @media(max-width: 768px) {
      .status-box ul li span:before {
          font-size: 34px;
